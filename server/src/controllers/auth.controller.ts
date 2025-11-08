@@ -12,6 +12,8 @@ const authController = {} as AuthController;
 
 authController.registerUser = async (req, res, next) => {
   try {
+    console.log("authController.registerUser");
+    
     const { username } = req.body;
     const { password_hash } = res.locals;
 

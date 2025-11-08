@@ -16,7 +16,7 @@ A web application to consolidate all your various online links onto a single, si
 
 ## 🏁 Quick Start Guide
 
-This guide is for developers who have cloned the project and want to run it locally.
+This guide is for developers who have cloned the project and want to run it locally.g
 
 ### 1. Prerequisites
 
