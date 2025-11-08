@@ -160,6 +160,6 @@ This document outlines the step-by-step tasks required to build, test, and compl
 ### John (Frontend):
 
 - `[ ]` Add "Loading" states (spinners) for all API calls.
-- `[ ]D` Add error handling (e.g., "Invalid password" on login, "Title is required" on link form).
+- `[ ]` Add error handling (e.g., "Invalid password" on login, "Title is required" on link form).
 - `[ ]` Check responsiveness: Ensure the app looks good on both desktop and mobile.
 - `[ ]` Remove all `console.log`s.

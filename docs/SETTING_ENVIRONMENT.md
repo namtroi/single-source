@@ -1,72 +1,117 @@
 # Setting Up the Development Environment (From Scratch)
 
-This document guides you through setting up the entire `single-source` project from an empty directory, including all modern configurations for ES Modules, Vite, and Tailwind v4.
+This document guides you through setting up the entire `single-source` project from an empty directory, using a full **TypeScript** stack with **ES Modules**.
 
 **Note:** All commands are run from the **project's root directory** unless specified otherwise.
 
 ---
 
-## 1. Backend Setup (Express + ES Modules)
+## 1. Backend Setup (Express + TypeScript + ESM)
 
 These steps will create and configure the `/server` directory.
 
 ### 1.1. Initialize Project & Dependencies
 
-```bash
+````bash
 # In your project's root folder:
 mkdir server
-
-# Now, navigate into the new server directory
 cd server
 
 # (You are now in /server)
 # Initialize a new Node.js project
 npm init -y
 
+### 1.2. Configure for ES Modules (ESM)
+
+1.  Open `/server/package.json`.
+2.  Add this line to the top level:
+    ```json
+    "type": "module",
+    ```
+
+### 1.3. Install Dependencies
+
+```bash
 # (Still in /server)
 # Install main dependencies
 npm install express pg bcryptjs jsonwebtoken cors dotenv
 
 # (Still in /server)
-# Install dev dependencies
-npm install -D nodemon
-```
+# Install ALL TypeScript dev dependencies
+npm install -D typescript @types/node @types/express @types/pg @types/bcryptjs @types/jsonwebtoken @types/cors tsx
+````
 
-### 1.2. Configure for ES Modules (ESM)
+- `typescript`: The core compiler.
+- `@types/...`: Type definition files for each library.
+- `tsx`: A modern, fast, zero-config tool to run TypeScript/ESM files directly (replaces `nodemon` and `ts-node`).
 
-1.  In `/server`, open the newly created `package.json`.
-2.  Add the following line to the top level:
-    ```json
-    "type": "module",
+### 1.4. Create TypeScript Config (`tsconfig.json`)
+
+1.  **Run this command:**
+
+    ```bash
+    # (Still in /server)
+    npx tsc --init
     ```
-3.  This allows you to use `import/export` syntax (e.g., `import express from 'express'`).
 
-### 1.3. Configure Run Scripts
+2.  **Replace** the generated `/server/tsconfig.json` with this modern ESM configuration:
+
+    ```json
+    {
+      "compilerOptions": {
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./dist",
+        "rootDir": "./src"
+      },
+      "include": ["src/**/*"],
+      "exclude": ["node_modules"]
+    }
+    ```
+
+### 1.5. Configure Run Scripts
 
 1.  In `/server/package.json`, update the `scripts` section:
     ```json
     "scripts": {
-      "start": "node server.js",
-      "dev": "nodemon server.js"
+      "dev": "tsx watch src/server.ts",
+      "build": "tsc",
+      "start": "node dist/server.js"
     }
     ```
-2.  Your main backend file (e.g., `server.js`) must be in the `/server` directory.
+    - `npm run dev`: Runs your server with hot-reload using `tsx`.
+    - `npm run build`: Compiles your TypeScript to JavaScript in the `/dist` folder.
+    - `npm run start`: Runs the compiled JavaScript (for production).
+
+### 1.6. Create Source File
+
+1.  Create a `src` folder inside `/server`:
+    ```bash
+    # (Still in /server)
+    mkdir src
+    ```
+2.  Create your main file at `/server/src/server.ts`.
 
 ---
 
-## 2\. Frontend Setup (Vite + React + Tailwind v4)
+## 2\. Frontend Setup (Vite + React + TypeScript)
 
 These steps will create and configure the `/client` directory.
 
-### 2.1. Initialize React Project (Vite)
+### 2.1. Initialize React Project (Vite + TS)
 
 ```bash
 # Go back to the project's root directory
 cd ..
 
 # (You are now in the root)
-# Use create-vite to build the 'client' folder
-npx create-vite@latest client --template react
+# Use create-vite with the react-ts template
+npx create-vite@latest client --template react-ts
 
 # Navigate into the new client directory
 cd client
@@ -76,6 +121,8 @@ cd client
 npm install
 ```
 
+_Vite automatically creates a `tsconfig.json` for the client with the correct settings._
+
 ### 2.2. Install Redux Toolkit & React Router
 
 ```bash
@@ -83,7 +130,7 @@ npm install
 npm install @reduxjs/toolkit react-redux react-router-dom
 ```
 
-_Remember to configure your Redux store, set up `BrowserRouter`, and wrap your `<App />` in the `<Provider>`._
+_Your Redux store (`store.ts`) and slices (`mySlice.ts`) will now be TypeScript files._
 
 ### 2.3. Install & Configure TailwindCSS v4
 
@@ -96,7 +143,7 @@ All of these commands are run **inside the `/client` directory**.
     npm install -D tailwindcss@next @tailwindcss/vite
     ```
 
-2.  **Initialize Tailwind (Optional but Recommended):**
+2.  **Initialize Tailwind:**
 
     ```bash
     # (In /client)
@@ -105,13 +152,16 @@ All of these commands are run **inside the `/client` directory**.
     ```
 
 3.  **Configure `tailwind.config.js`:**
-    Update `/client/tailwind.config.js` to scan your React components:
+    Update `/client/tailwind.config.js` to scan your React components (which are now `.tsx` files):
 
     ```javascript
     // /client/tailwind.config.js
     /** @type {import('tailwindcss').Config} */
     export default {
-      content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+      content: [
+        './index.html',
+        './src/**/*.{js,ts,jsx,tsx}', // Scans all TS/JS/TSX/JSX files
+      ],
       theme: {
         extend: {},
       },
@@ -142,5 +192,9 @@ All of these commands are run **inside the `/client` directory**.
 
     ```css
     /* /client/src/index.css */
-    @import 'tailwindcss';
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
     ```
+
+Your full-stack TypeScript environment is now configured.
