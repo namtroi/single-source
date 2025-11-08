@@ -28,7 +28,7 @@ This document outlines the step-by-step tasks required to build, test, and compl
 - `[x]` Install all server-side dependencies (`npm install` in `/server`).
 - `[x]` Create the local PostgreSQL database (e.g., `single_source_dev`).
 - `[x]` Run the SQL script from `DATABASE.md` to create `users` and `links` tables.
-- `[ ]` Create the `GET /api/health` test endpoint (as defined in `API_SPEC.md`).
+- `[x]` Create the `GET /api/health` test endpoint (as defined in `API_SPEC.md`).
 - `[x]` Run `npm run dev` and confirm the server runs.
 
 ### Frontend:
@@ -42,7 +42,7 @@ This document outlines the step-by-step tasks required to build, test, and compl
 ### 🏁 **Verification:**
 
 - `[x]` Test that Tailwind is working by adding a `className="text-red-500"` to `App.jsx`.
-- `[ ]` Test the connection by visiting Nam's health check endpoint (`http://localhost:8080/api/health`) in the browser.
+- `[x]` Test the connection by visiting Nam's health check endpoint (`http://localhost:8080/api/health`) in the browser.
 
 ---
 
@@ -52,11 +52,11 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### Nam (Backend):
 
-- `[ ]` Implement `POST /api/auth/register` endpoint.
+- `[x]` Implement `POST /api/auth/register` endpoint.
   - Logic: Hash password with `bcrypt`, save user to `users` table, generate JWT.
-- `[ ]` Implement `POST /api/auth/login` endpoint.
+- `[x]` Implement `POST /api/auth/login` endpoint.
   - Logic: Find user, compare hash with `bcrypt`, generate JWT.
-- `[ ]` Create the core reusable "Auth Middleware" (to check for `Authorization: Bearer <token>` on protected routes).
+- `[x]` Create the core reusable "Auth Middleware" (to check for `Authorization: Bearer <token>` on protected routes).
 
 ### John (Frontend):
 

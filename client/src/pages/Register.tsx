@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { api } from "../services/api";
-import { setCredentials } from "../features/auth/authSlice";
+import  api  from "../api/apiService";
+// import { setCredentials } from "../features/auth/authSlice";
 
 // This component renders the Register page
 export default function Register() {
  // Form state for user input
   const [form, setForm] = useState({
     username: "",
-    name: "",
-    email: "",
+    // name: "",
+    // email: "",
     password: "",
     confirm: "",
   });
@@ -40,7 +40,7 @@ export default function Register() {
     };
 
     // Conditional statement if no input is entered return error if no input
-    if (!form.username || !form.name || !form.email || !form.password) {
+    if (!form.username || !form.password) {
       return setError("Please fill in all fields.");
     }
     // Conditional statement if password is incorrrect return error if incorrect
@@ -51,16 +51,18 @@ export default function Register() {
     try {
       setLoading(true);
 
+      console.log('form', form);
+
       //Send the form data to the API to register the user
-      const data = await api.register({
-        username: form.username,
-        name: form.name,
-        email: form.email,
-        password: form.password,
-      });
+      const data = await api.register(
+        form.username,
+        // name: form.name,
+        // email: form.email,
+        form.password
+      );
       //Save the user and token in Redux and LocalStorage (Keep user logged in after refresh)
-      dispatch(setCredentials(data));
-      localStorage.setItem("auth", JSON.stringify(data));
+      // dispatch(setCredentials(data));
+      // localStorage.setItem("auth", JSON.stringify(data));
 
       navigate("/dashboard");
       setLoading(false); 
@@ -92,19 +94,19 @@ export default function Register() {
           onChange={(e) => setForm({ ...form, username: e.target.value })}
           className="border p-2 w-full rounded"
         />
-        <input
+        {/* <input
           placeholder="Name"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="border p-2 w-full rounded"
-        />
-        <input
+          className="border p-2 w-full rounded" />*/}
+        
+        {/* <input
           placeholder="Email"
           type="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           className="border p-2 w-full rounded"
-        />
+        /> */}
         <input
           placeholder="Password"
           type="password"
