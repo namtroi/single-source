@@ -1,0 +1,41 @@
+# --- General ---
+
+# Block all environment files.
+# NEVER commit .env files to Git!
+.env
+.env.*
+!.env.example
+
+# IDE & editor directories
+.vscode/
+.idea/
+
+# OS-specific files (macOS & Windows)
+.DS_Store
+Thumbs.db
+
+# --- Logs & Cache ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage/
+.npm/
+
+# --- Dependencies ---
+
+# Block node_modules in both client and server
+/server/node_modules/
+/client/node_modules/
+
+# --- Backend (server) ---
+
+# TypeScript build output
+/server/dist/
+
+# --- Frontend (client) ---
+
+# Vite/React build output
+/client/dist/
+
+# Vite cache directory
+/client/.vite/

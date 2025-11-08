@@ -1,0 +1,24 @@
+{
+  "name": "single-source",
+  "version": "1.0.0",
+  "description": "A web application to consolidate all your various online links onto a single, simple, public page.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namtroi/single-source.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/namtroi/single-source/issues"
+  },
+  "homepage": "https://github.com/namtroi/single-source#readme"
+}

@@ -16,32 +16,32 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### Repo Initiation :
 
-- `[ ]` Initialize Git repository on GitHub/GitLab.
-- `[ ]` Define and push the main branch protection rules.
-- `[ ]` Agree on a branching strategy (e.g., `main`, `dev`, `feat/feature-name`).
-- `[ ]` Clone the repository.
-- `[ ]` Review and confirm all 3 documentation files (`SETTING_ENVIRONMENT.md`, `API_SPEC.md`, `DATABASE.md`).
+- `[x]` Initialize Git repository on GitHub/GitLab.
+- `[x]` Define and push the main branch protection rules.
+- `[x]` Agree on a branching strategy (e.g., `main`, `dev`, `feat/feature-name`).
+- `[x]` Clone the repository.
+- `[x]` Review and confirm all documentation files.
 
 ### Backend:
 
-- `[ ]` Follow `SETTING_ENVIRONMENT.md` to set up the `/server` directory (Node, ESM, Express, etc.).
-- `[ ]` Install all server-side dependencies (`npm install` in `/server`).
+- `[x]` Follow `SETTING_ENVIRONMENT.md` to set up the `/server` directory (Node, ESM, Express, etc.).
+- `[x]` Install all server-side dependencies (`npm install` in `/server`).
 - `[ ]` Create the local PostgreSQL database (e.g., `single_source_dev`).
 - `[ ]` Run the SQL script from `DATABASE.md` to create `users` and `links` tables.
 - `[ ]` Create the `GET /api/health` test endpoint (as defined in `API_SPEC.md`).
-- `[ ]` Run `npm run dev` and confirm the server runs.
+- `[x]` Run `npm run dev` and confirm the server runs.
 
 ### Frontend:
 
-- `[ ]` Follow `SETTING_ENVIRONMENT.md` to set up the `/client` directory (Vite, React, Tailwind v4).
-- `[ ]` Install all client-side dependencies (`npm install` in `/client`).
+- `[x]` Follow `SETTING_ENVIRONMENT.md` to set up the `/client` directory (Vite, React, Tailwind v4).
+- `[x]` Install all client-side dependencies (`npm install` in `/client`).
 - `[ ]` Set up the basic Redux store (`store.js`) and `<Provider>` in `main.jsx`.
 - `[ ]` Set up `BrowserRouter` and create initial page components (e.S., `Home`, `Login`, `Register`, `Dashboard`, `PublicProfile`).
-- `[ ]` Run `npm run dev` and confirm the React app loads.
+- `[x]` Run `npm run dev` and confirm the React app loads.
 
 ### 🏁 **Verification:**
 
-- `[ ]` Test that Tailwind is working by adding a `className="text-red-500"` to `App.jsx`.
+- `[x]` Test that Tailwind is working by adding a `className="text-red-500"` to `App.jsx`.
 - `[ ]` Test the connection by visiting Nam's health check endpoint (`http://localhost:8080/api/health`) in the browser.
 
 ---
@@ -72,7 +72,7 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### 🏁 **Key Dependency:**
 
-- John is **blocked** on finishing this task until Nam's `/api/auth/register` and `/api/auth/login` endpoints are live and follow the `API_SPEC.md`.
+- John might be **blocked** on finishing this task until Nam's `/api/auth/register` and `/api/auth/login` endpoints are live and follow the `API_SPEC.md`. If so, John can create mock data to finish your part and integrate the flow when Nam finish his API.
 
 ---
 

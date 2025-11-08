@@ -12,7 +12,7 @@ These steps will create and configure the `/server` directory.
 
 ### 1.1. Initialize Project & Dependencies
 
-````bash
+```bash
 # In your project's root folder:
 mkdir server
 cd server
@@ -20,6 +20,7 @@ cd server
 # (You are now in /server)
 # Initialize a new Node.js project
 npm init -y
+```
 
 ### 1.2. Configure for ES Modules (ESM)
 
@@ -39,7 +40,7 @@ npm install express pg bcryptjs jsonwebtoken cors dotenv
 # (Still in /server)
 # Install ALL TypeScript dev dependencies
 npm install -D typescript @types/node @types/express @types/pg @types/bcryptjs @types/jsonwebtoken @types/cors tsx
-````
+```
 
 - `typescript`: The core compiler.
 - `@types/...`: Type definition files for each library.
@@ -143,15 +144,7 @@ All of these commands are run **inside the `/client` directory**.
     npm install -D tailwindcss@next @tailwindcss/vite
     ```
 
-2.  **Initialize Tailwind:**
-
-    ```bash
-    # (In /client)
-    # This creates tailwind.config.js
-    npx tailwindcss init
-    ```
-
-3.  **Configure `tailwind.config.js`:**
+2.  **Configure `tailwind.config.js`:**
     Update `/client/tailwind.config.js` to scan your React components (which are now `.tsx` files):
 
     ```javascript
@@ -169,7 +162,7 @@ All of these commands are run **inside the `/client` directory**.
     };
     ```
 
-4.  **Configure `vite.config.js`:**
+3.  **Configure `vite.config.js`:**
     Import and use the `@tailwindcss/vite` plugin in `/client/vite.config.js`:
 
     ```javascript
@@ -187,14 +180,13 @@ All of these commands are run **inside the `/client` directory**.
     });
     ```
 
-5.  **Add Tailwind Directives:**
+4.  **Add Tailwind Directives:**
     Replace the contents of `/client/src/index.css` with the Tailwind directives:
 
     ```css
     /* /client/src/index.css */
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+
+    @import 'tailwindcss';
     ```
 
 Your full-stack TypeScript environment is now configured.
