@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/namtroi/single-source/issues"
   },
-  "homepage": "https://github.com/namtroi/single-source#readme"
+  "homepage": "https://github.com/namtroi/single-source#readme",
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.10.1",
+    "axios": "^1.13.2",
+    "concurrently": "^9.2.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.9.5"
+  }
 }

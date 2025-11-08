@@ -26,8 +26,8 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 - `[x]` Follow `SETTING_ENVIRONMENT.md` to set up the `/server` directory (Node, ESM, Express, etc.).
 - `[x]` Install all server-side dependencies (`npm install` in `/server`).
-- `[ ]` Create the local PostgreSQL database (e.g., `single_source_dev`).
-- `[ ]` Run the SQL script from `DATABASE.md` to create `users` and `links` tables.
+- `[x]` Create the local PostgreSQL database (e.g., `single_source_dev`).
+- `[x]` Run the SQL script from `DATABASE.md` to create `users` and `links` tables.
 - `[ ]` Create the `GET /api/health` test endpoint (as defined in `API_SPEC.md`).
 - `[x]` Run `npm run dev` and confirm the server runs.
 
@@ -35,8 +35,8 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 - `[x]` Follow `SETTING_ENVIRONMENT.md` to set up the `/client` directory (Vite, React, Tailwind v4).
 - `[x]` Install all client-side dependencies (`npm install` in `/client`).
-- `[ ]` Set up the basic Redux store (`store.js`) and `<Provider>` in `main.jsx`.
-- `[ ]` Set up `BrowserRouter` and create initial page components (e.S., `Home`, `Login`, `Register`, `Dashboard`, `PublicProfile`).
+- `[x]` Set up the basic Redux store (`store.js`) and `<Provider>` in `main.jsx`.
+- `[x]` Set up `BrowserRouter` and create initial page components (e.S., `Home`, `Login`, `Register`, `Dashboard`, `PublicProfile`).
 - `[x]` Run `npm run dev` and confirm the React app loads.
 
 ### 🏁 **Verification:**
@@ -60,7 +60,7 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### John (Frontend):
 
-- `[ ]` Build the `Register.jsx` page and form.
+- `[x]` Build the `Register.jsx` page and form.
 - `[ ]` Build the `Login.jsx` page and form.
 - `[ ]` Create an `authSlice.js` in Redux.
   - State: `user`, `token`, `isAuthenticated`, `isLoading`, `error`.
