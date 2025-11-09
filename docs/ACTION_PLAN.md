@@ -82,7 +82,7 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### Nam (Backend):
 
-- `[ ]` Implement `GET /api/users/:username` endpoint.
+- `[x]` Implement `GET /api/users/:username` endpoint.
   - Logic: Find user by `username`, fetch all their associated links, return the `PublicProfile` object.
   - **Security:** Ensure the `password_hash` is **NOT** included in the response.
 
@@ -106,14 +106,14 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### Nam (Backend):
 
-- `[ ]` Apply the "Auth Middleware" to all `/api/links` routes.
-- `[ ]` Implement `GET /api/links` (Read).
+- `[x]` Apply the "Auth Middleware" to all `/api/links` routes.
+- `[x]` Implement `GET /api/links` (Read).
   - Logic: Get `user_id` from the JWT, return all links for that `user_id`.
-- `[ ]` Implement `POST /api/links` (Create).
+- `[x]` Implement `POST /api/links` (Create).
   - Logic: Get `user_id` from JWT, create new link associated with that user.
-- `[ ]` Implement `PUT /api/links/:linkId` (Update).
+- `[x]` Implement `PUT /api/links/:linkId` (Update).
   - Logic: Get `user_id` from JWT, verify they own the link (`linkId`), then update.
-- `[ ]` Implement `DELETE /api/links/:linkId` (Delete).
+- `[x]` Implement `DELETE /api/links/:linkId` (Delete).
   - Logic: Get `user_id` from JWT, verify they own the link (`linkId`), then delete.
 
 ### John (Frontend):
