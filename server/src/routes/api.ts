@@ -1,6 +1,7 @@
 import express from 'express';
-import authController from '../controllers/auth.controller.js';
-import authMiddleware from '../middleware/auth.middleware.js';
+import authController from '../controllers/auth.controller';
+import authMiddleware from '../middleware/auth.middleware';
+import linkController from '../controllers/link.controller';
 
 const apiRouter = express.Router();
 
@@ -17,6 +18,12 @@ apiRouter.post(
   authMiddleware.validateBody,
   authMiddleware.findUser,
   authController.loginUser
+);
+
+apiRouter.get(
+  '/users/:username',
+  authMiddleware.findUserByParams,
+  linkController.getPublicProfile
 );
 
 export default apiRouter;

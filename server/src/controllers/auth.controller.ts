@@ -1,5 +1,5 @@
 import type { RequestHandler } from 'express';
-import db from '../db.js';
+import db from '../db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
@@ -12,8 +12,8 @@ const authController = {} as AuthController;
 
 authController.registerUser = async (req, res, next) => {
   try {
-    console.log("authController.registerUser");
-    
+    console.log('authController.registerUser');
+
     const { username } = req.body;
     const { password_hash } = res.locals;
 

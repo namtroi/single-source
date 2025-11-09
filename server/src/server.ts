@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import apiRouter from './routes/api.js';
+import apiRouter from './routes/api';
 import cors from 'cors';
 
 const app = express();
@@ -10,11 +10,11 @@ const PORT = 8080;
 app.use(express.json());
 app.use(cors());
 
-app.use('/api', apiRouter);
-
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'Server is running' });
 });
+
+app.use('/api', apiRouter);
 
 app.use((req, res) => res.status(404).send('404 Error...'));
 

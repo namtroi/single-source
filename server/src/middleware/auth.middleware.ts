@@ -1,5 +1,5 @@
 import type { RequestHandler } from 'express';
-import db from '../db.js';
+import db from '../db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -9,6 +9,7 @@ interface AuthMiddleware {
   hashPassword: RequestHandler;
   findUser: RequestHandler;
   verifyToken: RequestHandler;
+  findUserByParams: RequestHandler;
 }
 
 interface JwtPayload {
@@ -124,6 +125,35 @@ authMiddleware.verifyToken = async (req, res, next) => {
       log: `authMiddleware.verifyToken: Invalid token - ${error}`,
       status: 403,
       message: { err: 'Forbidden: Invalid token' },
+    });
+  }
+};
+
+authMiddleware.findUserByParams = async (req, res, next) => {
+  try {
+    const username = req.params.username;
+    console.log(username);
+    const query = 'SELECT id, username FROM users WHERE username = $1';
+    const result = await db.query(query, [username]);
+
+    console.log(result.rows);
+
+    if (result.rows.length === 0) {
+      return next({
+        log: 'authMiddleware.findUserByParams: Username not found',
+        status: 404,
+        message: { err: 'Username not found' },
+      });
+    }
+
+    res.locals.profile = result.rows[0];
+
+    return next();
+  } catch (error) {
+    return next({
+      log: `authMiddleware.findUserByParams: DB error - ${error}`,
+      status: 500,
+      message: { err: 'Error checking database' },
     });
   }
 };
