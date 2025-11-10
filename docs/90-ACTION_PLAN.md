@@ -88,11 +88,11 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### John (Frontend):
 
-- `[ ]` Configure React Router with the dynamic route: `<Route path="/:username" element={<PublicProfile />} />`.
-- `[ ]` In `PublicProfile.jsx`, use the `useParams()` hook to get the `username` from the URL.
-- `[ ]` On page load, call Nam's `GET /api/users/:username` endpoint.
-- `[ ]` Build the UI to render the user's name and their list of links.
-- `[ ]` Add a "User not found" message or redirect if the API returns a 404.
+- `[x]` Configure React Router with the dynamic route: `<Route path="/:username" element={<PublicProfile />} />`.
+- `[x]` In `PublicProfile.jsx`, use the `useParams()` hook to get the `username` from the URL.
+- `[x]` On page load, call Nam's `GET /api/users/:username` endpoint.
+- `[x]` Build the UI to render the user's name and their list of links.
+- `[x]` Add a "User not found" message or redirect if the API returns a 404.
 
 ### 🏁 **Key Dependency:**
 

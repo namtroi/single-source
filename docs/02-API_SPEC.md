@@ -95,7 +95,3 @@ The API must verify that the authenticated user (`user_id` from the token) is th
 | Feature          | Method | Endpoint      | Request Body | Response (200)                                       |
 | :--------------- | :----- | :------------ | :----------- | :--------------------------------------------------- |
 | **Health Check** | `GET`  | `/api/health` | (None)       | `{ "status": "ok", "message": "Server is running" }` |
-
-```
-
-```

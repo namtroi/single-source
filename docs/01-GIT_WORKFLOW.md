@@ -97,7 +97,3 @@ After your branch is merged, delete it to keep the repository clean.
     ```
 
 Then, go back to Step 1 for your next task.
-
-```
-
-```
