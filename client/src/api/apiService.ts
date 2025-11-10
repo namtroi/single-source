@@ -14,10 +14,7 @@ export interface AuthResponse {
   user: User;
 }
 
-async function request<T>(
-  endpoint: string,
-  options: RequestInit
-): Promise<T> {
+async function request<T>(endpoint: string, options: RequestInit): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const response = await fetch(url, options);
 
@@ -57,14 +54,19 @@ const login = (username: string, password: string): Promise<AuthResponse> => {
 };
 
 export interface PublicProfileResponse {
-  name: string;
+  username: string;
   links: { title: string; url: string }[];
 }
 
-const getUserByUsername = async (username: string): Promise<PublicProfileResponse> => {
-  return request<PublicProfileResponse>(`/users/${encodeURIComponent(username)}`, {
-    method: "GET",
-  });
+const getUserByUsername = async (
+  username: string
+): Promise<PublicProfileResponse> => {
+  return request<PublicProfileResponse>(
+    `/users/${encodeURIComponent(username)}`,
+    {
+      method: 'GET',
+    }
+  );
 };
 
 const apiService = {

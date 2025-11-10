@@ -1,6 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-// import Navbar from './components/Navbar';
-import Home from './pages/Home';
 import Header from './components/Header';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,7 +12,7 @@ export default function App() {
       <Header />
       <main className='p-6'>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Login />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
 
@@ -27,7 +25,7 @@ export default function App() {
             }
           />
 
-          <Route path='/u/:username' element={<PublicProfile />} />
+          <Route path='/:username' element={<PublicProfile />} />
         </Routes>
       </main>
     </div>
