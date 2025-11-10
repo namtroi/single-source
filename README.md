@@ -7,8 +7,8 @@ A web application to consolidate all your various online links onto a single, si
 
 ### 🚀 Tech Stack
 
-- **Frontend:** React, Redux Toolkit, React Router, TailwindCSS
-- **Backend:** Node.js, Express (ES Modules)
+- **Frontend:** React (**TypeScript**), Redux Toolkit, React Router, TailwindCSS
+- **Backend:** Node.js, Express (**TypeScript**, ES Modules)
 - **Database:** PostgreSQL
 - **Authentication:** JWT (JSON Web Tokens) & bcrypt
 - **Validation:** Zod
