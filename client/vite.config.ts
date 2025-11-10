@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(), // 2. Add the plugin
   ],
   server: {
-    port: 5173, // your frontend port
+    port: 3000, // your frontend port
     proxy: {
       '/api': 'http://localhost:8080', // 👈 proxy all /api requests to backend
     },
