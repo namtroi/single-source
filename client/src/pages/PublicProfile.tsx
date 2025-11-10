@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiService from '../api/apiService';
 
+// Define link and profile DTO types for the public profile page
 type PublicLink = { title?: string; url: string };
 type PublicProfileDTO = { username: string; links: PublicLink[] };
 
+// Local component state shape for loading/error/notFound/profile
 type ProfileState = {
   loading: boolean;
   notFound: boolean;
@@ -12,6 +14,7 @@ type ProfileState = {
   profile: PublicProfileDTO | null;
 };
 
+// This component renders a public-facing profile page for a given username
 export default function PublicProfile() {
   const { username } = useParams<{ username: string }>();
   const navigate = useNavigate();
@@ -27,6 +30,7 @@ export default function PublicProfile() {
   const patch = (partial: Partial<ProfileState>) =>
     setState((prev) => ({ ...prev, ...partial }));
 
+    // Fetch the public profile when the username changes (or on first mount)
   useEffect(() => {
     let cancelled = false;
 
@@ -53,6 +57,7 @@ export default function PublicProfile() {
 
   const { loading, notFound, error, profile } = state;
 
+    // Render loading state
   if (loading) {
     return (
       <div className='max-w-xl mx-auto'>
@@ -61,6 +66,7 @@ export default function PublicProfile() {
     );
   }
 
+    // Render not-found state with a back/home action
   if (notFound) {
     return (
       <div className='max-w-xl mx-auto'>
@@ -79,6 +85,7 @@ export default function PublicProfile() {
     );
   }
 
+    // Render generic error state
   if (error) {
     return (
       <div className='max-w-xl mx-auto'>
@@ -94,6 +101,7 @@ export default function PublicProfile() {
 
   console.log('profile', profile);
 
+  // Render the public profile with avatar and link list
   return (
     <div className='max-w-xl mx-auto'>
       <img

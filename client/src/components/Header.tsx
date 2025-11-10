@@ -3,19 +3,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from '../features/auth/authSlice';
 import type { RootState } from '../app/store';
 
+// This component renders the top navigation bar for the app
 export default function Header() {
   const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.auth // access authentication state from Redux
   );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch(); // initialize Redux dispatch
+  const navigate = useNavigate(); // initialize navigation hook
 
+    // Handle user logout (clears localStorage and redirects to login)
   const handleLogout = () => {
     dispatch(logOut());
     localStorage.removeItem('auth');
     navigate('/login');
   };
 
+    // Render header layout (shows different options if logged in or not)
   return (
     <header className='flex justify-between items-center p-4 bg-white shadow-md'>
       <div>

@@ -1,21 +1,27 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom'; 
 import api from '../api/apiService';
 import { setCredentials } from '../features/auth/authSlice';
 
+// This component renders the Login page and handles authentication
 export default function Login() {
   const [form, setForm] = useState({
     username: '',
     password: '',
   });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(''); // error message to display
+  const [loading, setLoading] = useState(false); // loading state for submit
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch(); // redux dispatch
+  const navigate = useNavigate(); // navigation helper
+  const location = useLocation(); // current route/location
 
+  // ⬅️ get path the user came from, or default to /dashboard
+  const from = (location.state as any)?.from?.pathname || '/dashboard';
+
+  // Handle form submission and perform login
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
@@ -29,7 +35,10 @@ export default function Login() {
       const data = await api.login(form.username, form.password);
       dispatch(setCredentials(data));
       localStorage.setItem('auth', JSON.stringify(data));
-      navigate('/dashboard');
+
+      // ⬅️ redirect back to previous location or dashboard
+      navigate(from, { replace: true });
+
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -43,6 +52,7 @@ export default function Login() {
     }
   };
 
+    // Render login form and messaging
   return (
     <div className='max-w-md mx-auto p-6'>
       <h1 className='text-2xl font-bold mb-4'>Login</h1>

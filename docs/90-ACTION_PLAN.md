@@ -118,15 +118,15 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### John (Frontend):
 
-- `[ ]` Secure the `/dashboard` route using the `ProtectedRoute` component.
-- `[ ]` Create a `linksSlice.js` in Redux to manage the array of links.
-- `[ ]` In `Dashboard.jsx`, on page load, call `GET /api/links` and populate the Redux store.
-- `[ ]` Build `AddLinkForm.jsx` component to `POST` new links.
-- `[ ]` Build `LinkList.jsx` to display the links from the Redux store.
-- `[ ]` Build `LinkItem.jsx` component with "Edit" and "Delete" buttons.
+- `[x]` Secure the `/dashboard` route using the `ProtectedRoute` component.
+- `[x]` Create a `linksSlice.js` in Redux to manage the array of links.
+- `[x]` In `Dashboard.jsx`, on page load, call `GET /api/links` and populate the Redux store.
+- `[x]` Build `AddLinkForm.jsx` component to `POST` new links.
+- `[x]` Build `LinkList.jsx` to display the links from the Redux store.
+- `[x]` Build `LinkItem.jsx` component with "Edit" and "Delete" buttons.
   - "Delete" button triggers `DELETE /api/links/:linkId`.
   - "Edit" button can open a modal/inline form to `PUT /api/links/:linkId`.
-- `[ ]` Create an API utility (e.g., `api.js`) that automatically attaches the `token` from the Redux store to the headers of all protected requests.
+- `[x]` Create an API utility (e.g., `api.js`) that automatically attaches the `token` from the Redux store to the headers of all protected requests.
 
 ### 🏁 **Key Dependency:**
 
@@ -140,7 +140,7 @@ This document outlines the step-by-step tasks required to build, test, and compl
 
 ### Both:
 
-- `[ ]` **Full End-to-End Test (Manual):**
+- `[x]` **Full End-to-End Test (Manual):**
   1.  (John) Register a new user.
   2.  (John) Log in with that user.
   3.  (John) Go to `/dashboard`.
