@@ -23,5 +23,8 @@
   "homepage": "https://github.com/namtroi/single-source#readme",
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }
