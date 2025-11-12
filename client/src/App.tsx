@@ -1,12 +1,12 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from './app/store';
-import Header from './components/Header';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import PublicProfile from './pages/PublicProfile';
-import ProtectedRoute from './components/ProtectedRoute';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "./app/store";
+import Header from "./components/Header";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import PublicProfile from "./pages/PublicProfile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // This component defines all routes and main layout of the app
 export default function App() {
@@ -21,7 +21,11 @@ export default function App() {
           <Route
             path="/"
             element={
-              isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+              isAuthenticated ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
           <Route path="/login" element={<Login />} />

@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchLinks } from '../features/links/linksSlice';
-import AddLinkForm from '../components/AddLinkForm';
-import LinkList from '../components/LinkList';
-import type { AppDispatch, RootState } from '../app/store';
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLinks } from "../features/links/linksSlice";
+import AddLinkForm from "../components/AddLinkForm";
+import LinkList from "../components/LinkList";
+import type { AppDispatch, RootState } from "../app/store";
 // This component renders the user's dashboard with their saved links
 export default function Dashboard() {
   // Access Redux dispatch and select state data from the links slice
@@ -18,11 +17,11 @@ export default function Dashboard() {
 
   // Render dashboard layout, loading/error states, and link list
   return (
-    <div className='max-w-xl mx-auto space-y-4'>
-      <h1 className='text-2xl font-bold'>Dashboard</h1>
+    <div>
+      <h1 className="text-2xl font-bold">Dashboard</h1>
       <AddLinkForm />
       {isLoading && <div>Loading…</div>}
-      {error && <div className='text-red-600'>{error}</div>}
+      {error && <div className="text-red-600">{error}</div>}
       <LinkList />
     </div>
   );
