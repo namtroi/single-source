@@ -7,6 +7,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer, // handles authentication state (login/logout)
     links: linksReducer, // handles link CRUD and API states
+    
   },
 });
 

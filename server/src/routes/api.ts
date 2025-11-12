@@ -10,6 +10,7 @@ import { linkSchema } from "../schemas";
 
 const apiRouter = express.Router();
 console.log("✅ server.ts loaded apiRouter import successfully");
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.post(
   "/auth/register",
@@ -18,6 +19,7 @@ apiRouter.post(
   authMiddleware.hashPassword,
   authController.registerUser
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
 console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.post(
@@ -29,6 +31,9 @@ apiRouter.post(
 console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.patch("/users/theme", authMiddleware.verifyToken, updateTheme);
+console.log("✅ server.ts loaded apiRouter import successfully");
+
+apiRouter.patch("/users/theme", authMiddleware.verifyToken, updateTheme);
 
 apiRouter.get(
   "/users/:username",
@@ -36,8 +41,10 @@ apiRouter.get(
   linkController.getPublicProfile
 );
 console.log("✅ server.ts loaded apiRouter import successfully");
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.get("/links", authMiddleware.verifyToken, linkController.getMyLinks);
+console.log("✅ server.ts loaded apiRouter import successfully");
 console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.post(
@@ -47,6 +54,7 @@ apiRouter.post(
   linkController.createLink
 );
 console.log("✅ server.ts loaded apiRouter import successfully");
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.put(
   "/links/:linkId",
@@ -55,6 +63,7 @@ apiRouter.put(
   authMiddleware.verifyLinkOwnership,
   linkController.updateLink
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
 console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.delete(

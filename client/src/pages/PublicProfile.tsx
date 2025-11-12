@@ -103,7 +103,8 @@ export default function PublicProfile() {
   // Render the public profile with avatar and link list
   return (
     <div className="max-w-xl mx-auto">
-      <ChangeTheme />
+            <ChangeTheme />
+
 
       <img
         src="/avatar.jpg"
@@ -112,6 +113,7 @@ export default function PublicProfile() {
         className="rounded-full mx-auto mb-4"
       />
       <div className="absolute justify-end w-full top-20 left-265">
+        
         <input id="fileInput" type="file" accept="image/*" className="hidden" />
         <label
           htmlFor="fileInput"

@@ -5,6 +5,9 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 interface User {
   id: number;
   username: string;
+  theme_preference?: {
+    theme: "light" | "dark" | "calm"
+  }
 }
 
 // Define authentication response type
@@ -132,19 +135,27 @@ const deleteLink = (id: number): Promise<void> => {
   });
 };
 
-// Update user theme preference
-export const updateTheme = async (username: string, theme_preference: string) => {
-  return request(`/users/${username}/theme`, {
-    method: "PATCH", 
+async function updateTheme(themeName: string) {
+  const token = JSON.parse(localStorage.getItem("auth") || "{}")?.token;
+
+  const res = await fetch("http://localhost:8080/api/users/theme", {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      ...getAuthHeaders(),
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ theme_preference }),
+    body: JSON.stringify({ theme: themeName }),
   });
-};
 
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Failed: ${res.status} - ${errText}`);
+  }
 
+  const data = await res.json();
+  console.log("✅ Theme updated:", data);
+  return data;
+}
 // Export all API functions
 const apiService = {
   register,
