@@ -200,9 +200,9 @@ Priority: Highest.
 John (Backend)
 
 - [x] Add `theme_preference` to users table (JSON or VARCHAR).
-- [ ] `PUT /api/users/theme (auth)` — save theme.
-- [ ] Include theme_preference in `GET /api/users/:username.`
-- [ ] Validate theme payload (hex/rgb, safe ranges).
+- [x] `PUT /api/users/theme (auth)` — save theme.
+- [x] Include theme_preference in `GET /api/users/:username.`
+- [x] Validate theme payload (hex/rgb, safe ranges).
 
 Avo (Frontend)
 

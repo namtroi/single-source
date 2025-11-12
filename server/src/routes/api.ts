@@ -1,12 +1,13 @@
-import express from 'express';
-import { updateTheme } from '../controllers/theme.controller';
-import authController from '../controllers/auth.controller';
-import authMiddleware from '../middleware/auth.middleware';
-import linkController from '../controllers/link.controller';
-import { validate } from '../middleware/validation.middleware';
-import { linkSchema } from '../schemas';
+import express from "express";
+import { updateTheme } from "../controllers/theme.controller";
+import authController from "../controllers/auth.controller";
+import authMiddleware from "../middleware/auth.middleware";
+import linkController from "../controllers/link.controller";
+import { validate } from "../middleware/validation.middleware";
+import { linkSchema } from "../schemas";
 
 const apiRouter = express.Router();
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.post(
   "/auth/register",
@@ -15,6 +16,7 @@ apiRouter.post(
   authMiddleware.hashPassword,
   authController.registerUser
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.post(
   "/auth/login",
@@ -22,14 +24,19 @@ apiRouter.post(
   authMiddleware.findUser,
   authController.loginUser
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
+
+apiRouter.patch("/users/theme", authMiddleware.verifyToken, updateTheme);
 
 apiRouter.get(
   "/users/:username",
   authMiddleware.findUserByParams,
   linkController.getPublicProfile
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.get("/links", authMiddleware.verifyToken, linkController.getMyLinks);
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.post(
   "/links",
@@ -37,6 +44,7 @@ apiRouter.post(
   validate(linkSchema),
   linkController.createLink
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.put(
   "/links/:linkId",
@@ -45,6 +53,7 @@ apiRouter.put(
   authMiddleware.verifyLinkOwnership,
   linkController.updateLink
 );
+console.log("✅ server.ts loaded apiRouter import successfully");
 
 apiRouter.delete(
   "/links/:linkId",
@@ -53,9 +62,6 @@ apiRouter.delete(
   linkController.deleteLink
 );
 
-apiRouter.patch(
-  '/users/theme',
-  authMiddleware.verifyToken,
-  updateTheme
-);
+console.log("✅ server.ts loaded UPDATE import successfully");
+
 export default apiRouter;
