@@ -1,4 +1,5 @@
 import express from 'express';
+import { updateTheme } from '../controllers/theme.controller';
 import authController from '../controllers/auth.controller';
 import authMiddleware from '../middleware/auth.middleware';
 import linkController from '../controllers/link.controller';
@@ -52,4 +53,9 @@ apiRouter.delete(
   linkController.deleteLink
 );
 
+apiRouter.patch(
+  '/users/theme',
+  authMiddleware.verifyToken,
+  updateTheme
+);
 export default apiRouter;

@@ -182,28 +182,30 @@ Priority: Highest.
 
 ## Repo Setup
 
-- [ ] Pull the latest stable main branch from the original MVP.
-- [ ] Create a new branch for iteration work (e.g., iteration/custom-theme, iteration/profile-upload).
-- [ ] Review existing backend routes and database schema for compatibility.
-- [ ] Update docs: `README.md`, `.env.example`, setup notes.
+- [x] Pull the latest stable main branch from the original MVP.
+- [x] Create a new branch for iteration work (e.g., iteration/custom-theme, iteration/profile-upload).
+- [x] Review existing backend routes and database schema for compatibility.
+- [x] Update docs: `README.md`, `.env.example`, setup notes.
 
 # Verification
 
-- [ ] Run `/server` and `/client` concurrently with npm run dev.
-- [ ] Confirm registration, login, and dashboard work as-is.
-- [ ] Verify link CRUD works before changes.
+- [x] Run `/server` and `/client` concurrently with npm run dev.
+- [x] Confirm registration, login, and dashboard work as-is.
+- [x] Verify link CRUD works before changes.
 
 ## Phase 1: Custom Theme Feature
 
 # Goal: Allow users to select and apply custom themes (colors/presets) stored per user.
 
 John (Backend)
-- [ ] Add `theme_preference` to users table (JSON or VARCHAR).
+
+- [x] Add `theme_preference` to users table (JSON or VARCHAR).
 - [ ] `PUT /api/users/theme (auth)` — save theme.
 - [ ] Include theme_preference in `GET /api/users/:username.`
 - [ ] Validate theme payload (hex/rgb, safe ranges).
 
 Avo (Frontend)
+
 - [ ] Add “Customize Theme” entry in nav → `/profile/customize`.
 - [ ] Build `ThemeCustomizer.jsx` with presets + live preview.
 - [ ] Persist via `PUT /api/users/theme`; store in Redux user slice.
@@ -222,7 +224,7 @@ John (Backend)
 
 Avo (Frontend)
 [ ] Build upload UI in `ProfileSettings.jsx` with preview + progress.
-[ ] POST image to /api/users/upload.
+[ ] POST image to `/api/users/upload`.
 [ ] Display current avatar on Dashboard & Public Profile.
 
 Key Dependency: Avo needs John’s upload endpoint + returned URL.
