@@ -185,7 +185,7 @@ Priority: Highest.
 - [x] Pull the latest stable main branch from the original MVP.
 - [x] Create a new branch for iteration work (e.g., iteration/custom-theme, iteration/profile-upload).
 - [x] Review existing backend routes and database schema for compatibility.
-- [x] Update docs: `README.md`, `.env.example`, setup notes.
+- [x] Update docs: `README.md`, `.env.mplemple`, setup notes.
 
 # Verification
 

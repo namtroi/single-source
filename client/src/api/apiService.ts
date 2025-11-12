@@ -1,5 +1,5 @@
 // Set the base URL for all API requests using the environment variable
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
 // Define user type
 interface User {
@@ -31,8 +31,8 @@ async function request<T>(endpoint: string, options: RequestInit): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const res = await fetch(url, options);
 
-  const contentType = res.headers.get('content-type') || '';
-  const isJson = contentType.includes('application/json');
+  const contentType = res.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
 
   if (!res.ok) {
     const message = isJson ? (await res.json())?.err : await res.text();
@@ -48,18 +48,18 @@ const register = (
   username: string,
   password: string
 ): Promise<AuthResponse> => {
-  return request('/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  return request("/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
 };
 
 // Log in an existing user
 const login = (username: string, password: string): Promise<AuthResponse> => {
-  return request('/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  return request("/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
 };
@@ -68,12 +68,12 @@ const login = (username: string, password: string): Promise<AuthResponse> => {
 const getUserByUsername = (
   username: string
 ): Promise<PublicProfileResponse> => {
-  return request(`/users/${encodeURIComponent(username)}`, { method: 'GET' });
+  return request(`/users/${encodeURIComponent(username)}`, { method: "GET" });
 };
 
 // Helper to attach Authorization header using saved token
 function getAuthHeaders(): HeadersInit {
-  const storedAuth = localStorage.getItem('auth');
+  const storedAuth = localStorage.getItem("auth");
   let token: string | null = null;
 
   try {
@@ -89,8 +89,8 @@ function getAuthHeaders(): HeadersInit {
 
 // Fetch all saved links for the logged-in user
 const getLinks = (): Promise<Link[]> => {
-  return request('/links', {
-    method: 'GET',
+  return request("/links", {
+    method: "GET",
     headers: getAuthHeaders(),
   });
 };
@@ -98,11 +98,11 @@ const getLinks = (): Promise<Link[]> => {
 // Create a new link
 const createLink = (title: string, url: string): Promise<Link> => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...getAuthHeaders(),
   };
-  return request('/links', {
-    method: 'POST',
+  return request("/links", {
+    method: "POST",
     headers,
     body: JSON.stringify({ title, url }),
   });
@@ -114,11 +114,11 @@ const updateLink = (
   updates: Partial<{ title: string; url: string }>
 ): Promise<Link> => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...getAuthHeaders(),
   };
   return request(`/links/${id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
     body: JSON.stringify(updates),
   });
@@ -127,10 +127,23 @@ const updateLink = (
 // Delete a link by ID
 const deleteLink = (id: number): Promise<void> => {
   return request(`/links/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: getAuthHeaders(),
   });
 };
+
+// Update user theme preference
+export const updateTheme = async (username: string, theme_preference: string) => {
+  return request(`/users/${username}/theme`, {
+    method: "PATCH", 
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(),
+    },
+    body: JSON.stringify({ theme_preference }),
+  });
+};
+
 
 // Export all API functions
 const apiService = {
@@ -141,6 +154,7 @@ const apiService = {
   createLink,
   updateLink,
   deleteLink,
+  updateTheme,
 };
 
 export default apiService;

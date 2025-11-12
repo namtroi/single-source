@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apiService from "../api/apiService";
-
+import ChangeTheme from "../components/changeTheme";
 // Define link and profile DTO types for the public profile page
 type PublicLink = { title?: string; url: string };
 type PublicProfileDTO = { username: string; links: PublicLink[] };
@@ -12,20 +12,6 @@ type ProfileState = {
   notFound: boolean;
   error: string | null;
   profile: PublicProfileDTO | null;
-};
-
-//Creating functionality for file explorer upon update profile picture
-function ProfilePicUpload() {
-  const fileInputRef = React.useRef(null);
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
-}
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    console.log("Selected file is ", file.name);
-  }
 };
 
 // This component renders a public-facing profile page for a given username
@@ -117,6 +103,8 @@ export default function PublicProfile() {
   // Render the public profile with avatar and link list
   return (
     <div className="max-w-xl mx-auto">
+      <ChangeTheme />
+
       <img
         src="/avatar.jpg"
         width={100}

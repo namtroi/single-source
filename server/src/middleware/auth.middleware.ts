@@ -11,6 +11,7 @@ interface AuthMiddleware {
   verifyToken: RequestHandler;
   findUserByParams: RequestHandler;
   verifyLinkOwnership: RequestHandler;
+  changeTheme: RequestHandler;
 }
 
 interface JwtPayload {
@@ -195,4 +196,5 @@ authMiddleware.verifyLinkOwnership = async (req, res, next) => {
   }
 };
 
+   
 export default authMiddleware;
