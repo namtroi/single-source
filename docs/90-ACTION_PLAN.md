@@ -202,14 +202,13 @@ John (Backend)
 - [x] Add `theme_preference` to users table (JSON or VARCHAR).
 - [x] `PUT /api/users/theme (auth)` — save theme.
 - [x] Include theme_preference in `GET /api/users/:username.`
-- [x] Validate theme payload (hex/rgb, safe ranges).
 
 Avo (Frontend)
 
-- [ ] Add “Customize Theme” entry in nav → `/profile/customize`.
-- [ ] Build `ThemeCustomizer.jsx` with presets + live preview.
-- [ ] Persist via `PUT /api/users/theme`; store in Redux user slice.
-- [ ] Apply theme using CSS variables.
+- [x] Add “Customize Theme” entry in nav → `/profile/customize`.
+- [x] Build `ThemeCustomizer.jsx` with presets + live preview.
+- [x] Persist via `PUT /api/users/theme`; store in Redux user slice.
+- [] Apply theme using CSS variables.
 
 Key Dependency: Avo’s save/load UI depends on John’s theme endpoints.
 
@@ -218,14 +217,14 @@ Key Dependency: Avo’s save/load UI depends on John’s theme endpoints.
 # Goal: Let users upload/store a profile picture and show it on profile pages.
 
 John (Backend)
-[ ] Configure multer for image uploads (size/type limits).
-[ ] `POST /api/users/upload (auth)` — save file; persist profile_image_url.
-[ ] Serve uploads (static or CDN) and include URL in GET /api/users/:username.
+- [x] Configure multer with memoryStorage, size limits, and image-only MIME types.
+- [x] Implement POST /api/users/upload (auth) to upload avatar to Supabase and save profile_image_url.
+- [x] Return profile_image_url in GET /api/users/:username using the Supabase public URL.
 
 Avo (Frontend)
-[ ] Build upload UI in `ProfileSettings.jsx` with preview + progress.
-[ ] POST image to `/api/users/upload`.
-[ ] Display current avatar on Dashboard & Public Profile.
+- [ ] Build file-upload UI in ProfileSettings.jsx with preview.
+- [ ] POST avatar using FormData to /api/users/upload.
+- [ ] Display the saved avatar on Dashboard and Public Profile pages.
 
 Key Dependency: Avo needs John’s upload endpoint + returned URL.
 

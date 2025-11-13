@@ -1,6 +1,7 @@
 import type { Response } from "express";
 import db from "../db";
-// simple validation (no zod)
+
+// simple validation 
 const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 const RGB =
   /^rgb\(\s*(2[0-4]\d|25[0-5]|1?\d?\d)\s*,\s*(2[0-4]\d|25[0-5]|1?\d?\d)\s*,\s*(2[0-4]\d|25[0-5]|1?\d?\d)\s*\)$/i;

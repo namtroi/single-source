@@ -1,11 +1,14 @@
 module.exports = {
-  darkMode: 'class', // CRITICAL: Add this line
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        bg: "var(--bg)",
+        text: "var(--text)",
+        accent: "var(--accent)",
+      },
+    },
   },
+  darkMode: "class", // IMPORTANT for dark mode
   plugins: [],
-}
+};

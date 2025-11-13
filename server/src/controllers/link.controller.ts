@@ -41,14 +41,21 @@ linkController.getPublicProfile = async (req, res, next) => {
 linkController.getMyLinks = async (req, res, next) => {
   try {
     const userId = res.locals.userId;
-    const query = `SELECT id, title, url FROM links WHERE user_id = $1`;
+
+    const query = `
+      SELECT id, title, url
+      FROM public.links
+      WHERE user_id = $1
+      ORDER BY created_at ASC;
+    `;
+
     const result = await db.query(query, [userId]);
     return res.status(200).json(result.rows);
   } catch (error) {
     return next({
       log: `linkController.getMyLinks - ${error}`,
       status: 500,
-      message: { err: 'Failed to get links' },
+      message: { err: "Failed to get links" },
     });
   }
 };
