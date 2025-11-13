@@ -5,3 +5,13 @@
 
 /* @import "tailwindcss/preflight";
 @import "tailwindcss/utilities"; */
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --accent: #2563eb;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
