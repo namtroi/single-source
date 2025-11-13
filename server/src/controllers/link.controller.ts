@@ -13,16 +13,27 @@ const linkController = {} as LinkController;
 
 linkController.getPublicProfile = async (req, res, next) => {
   try {
-    const { id, username } = res.locals.profile;
-    const queryGetProfile = `SELECT id, title, url FROM links WHERE user_id = $1`;
-    const result = await db.query(queryGetProfile, [id]);
-    res.locals.profile.links = result.rows;
+    const { id } = res.locals.profile;
+        // get all links for that user
+    const linksQuery = `SELECT id, title, url FROM links WHERE user_id = $1 ORDER BY id DESC`;
+    const linksResult = await db.query(linksQuery, [id]);
+
+    // get that user's saved theme
+    const themeQuery = `SELECT theme_preference FROM users WHERE id = $1 LIMIT 1`;
+    const themeResult = await db.query(themeQuery, [id]);
+    const theme_preference = themeResult.rows[0]?.theme_preference ?? null;
+
+    // attach both to the profile object
+    res.locals.profile.links = linksResult.rows;
+    res.locals.profile.theme_preference = theme_preference;
+
+    // send everything back
     return res.status(200).json(res.locals.profile);
-  } catch (error) {
+} catch (error) {
     return next({
       log: `linkController.getPublicProfile - ${error}`,
       status: 500,
-      message: { err: 'Failed to get user profile' },
+      message: { err: "Failed to get user profile" },
     });
   }
 };
@@ -30,14 +41,21 @@ linkController.getPublicProfile = async (req, res, next) => {
 linkController.getMyLinks = async (req, res, next) => {
   try {
     const userId = res.locals.userId;
-    const query = `SELECT id, title, url FROM links WHERE user_id = $1`;
+
+    const query = `
+      SELECT id, title, url
+      FROM public.links
+      WHERE user_id = $1
+      ORDER BY created_at ASC;
+    `;
+
     const result = await db.query(query, [userId]);
     return res.status(200).json(result.rows);
   } catch (error) {
     return next({
       log: `linkController.getMyLinks - ${error}`,
       status: 500,
-      message: { err: 'Failed to get links' },
+      message: { err: "Failed to get links" },
     });
   }
 };

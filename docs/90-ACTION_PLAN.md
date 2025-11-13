@@ -163,3 +163,132 @@ This document outlines the step-by-step tasks required to build, test, and compl
 - `[ ]` Add error handling (e.g., "Invalid password" on login, "Title is required" on link form).
 - `[ ]` Check responsiveness: Ensure the app looks good on both desktop and mobile.
 - `[ ]` Remove all `console.log`s.
+
+## Action Plan: Single Source Iteration MVP
+
+This document outlines the step-by-step tasks required to build, test, and complete the iteration of the Single Source MVP.
+
+## Team:
+
+John: Back-end (API, Database, Auth, File Uploads, QR Generation) – Git Lead
+Avo: Front-end (React Components, UI/UX, Theming, Routing, Profile Customization) – Scrum Lead
+Both: Integration, Testing, and Deployment
+
+## Phase 0: Iteration Setup & Foundation
+
+# Goal: Set up the environment for the new iteration and ensure compatibility with the existing MVP.
+
+Priority: Highest.
+
+## Repo Setup
+
+- [x] Pull the latest stable main branch from the original MVP.
+- [x] Create a new branch for iteration work (e.g., iteration/custom-theme, iteration/profile-upload).
+- [x] Review existing backend routes and database schema for compatibility.
+- [x] Update docs: `README.md`, `.env.mplemple`, setup notes.
+
+# Verification
+
+- [x] Run `/server` and `/client` concurrently with npm run dev.
+- [x] Confirm registration, login, and dashboard work as-is.
+- [x] Verify link CRUD works before changes.
+
+## Phase 1: Custom Theme Feature
+
+# Goal: Allow users to select and apply custom themes (colors/presets) stored per user.
+
+John (Backend)
+
+- [x] Add `theme_preference` to users table (JSON or VARCHAR).
+- [x] `PUT /api/users/theme (auth)` — save theme.
+- [x] Include theme_preference in `GET /api/users/:username.`
+
+Avo (Frontend)
+
+- [x] Add “Customize Theme” entry in nav → `/profile/customize`.
+- [x] Build `ThemeCustomizer.jsx` with presets + live preview.
+- [x] Persist via `PUT /api/users/theme`; store in Redux user slice.
+- [] Apply theme using CSS variables.
+
+Key Dependency: Avo’s save/load UI depends on John’s theme endpoints.
+
+## Phase 2: Profile Picture Upload
+
+# Goal: Let users upload/store a profile picture and show it on profile pages.
+
+John (Backend)
+- [x] Configure multer with memoryStorage, size limits, and image-only MIME types.
+- [x] Implement POST /api/users/upload (auth) to upload avatar to Supabase and save profile_image_url.
+- [x] Return profile_image_url in GET /api/users/:username using the Supabase public URL.
+
+Avo (Frontend)
+- [ ] Build file-upload UI in ProfileSettings.jsx with preview.
+- [ ] POST avatar using FormData to /api/users/upload.
+- [ ] Display the saved avatar on Dashboard and Public Profile pages.
+
+Key Dependency: Avo needs John’s upload endpoint + returned URL.
+
+## Phase 3: QR Code Generation
+
+# Goal: Generate a QR code that links to `/u/:username` and expose it on the public profile.
+
+John (Backend)
+[ ] Add qrcode lib.
+[ ] `GET /api/users/:username/qr?format=svg|png&size=256&ecc=Q — return QR.`
+[ ] Add cache headers (immutable/max-age; ETag).
+
+Avo (Frontend)
+[ ] Show QR on Public Profile with `“Download PNG”` and `“Copy Profile URL”` buttons.
+[ ] Optional: theme-aware QR (dark/light contrast).
+
+Key Dependency: Avo’s display/download uses John’s QR endpoint.
+
+## Phase 4: Integration & Testing
+
+# Goal: Ensure all new features integrate smoothly and regressions are avoided.
+
+Both
+[ ] Theme persists across sessions and applies instantly on Public Profile.
+[ ] Avatar upload stores and renders correctly.
+[ ] QR code points to the right URL and downloads correctly.
+[ ] Full regression of auth and link CRUD.
+
+John (Backend)
+[ ] Add validation + consistent error format `({ err: string })`.
+[ ] Optimize queries; indexes if needed.
+[ ] Remove debug logs; tighten CORS & security headers.
+
+Avo (Frontend)
+[ ] Add loading/skeleton and error states for new features.
+[ ] Ensure responsive design for customize, upload, and QR sections.
+[ ] Remove debug logs; accessibility pass (labels, focus).
+
+## Phase 5: Stretch Goals
+
+# Goal: Extend personalization and sharing with optional enhancements.
+
+[ ] OAuth login (Google/Facebook).
+[ ] Pin links (DB boolean + sort first).
+[ ] Link ordering via drag-and-drop (persist position).
+[ ] QR scan analytics (server-side increment + dashboard chart).
+[ ] Layout styles (list/grid/card) per user theme.
+
+## Final Deliverables
+
+[ ] Custom theme selector with persisted settings.
+[ ] Profile picture upload pipeline (client → server → storage) and display.
+[ ] QR generation endpoint + UI (view + download).
+[ ] Updated docs with setup, endpoints, and demo steps.
+
+## Tech Stack
+
+Frontend: React, Vite, Redux Toolkit, Tailwind (CSS variables for theming)
+Backend: Node.js, Express, Multer (uploads), qrcode
+Database: PostgreSQL
+Auth: JWT (Bearer)
+Runbook (Dev)
+Server: cd server && npm i && npm run dev
+Client: cd client && npm i && npm run dev
+
+ENV:
+Server: PORT=8080, DATABASE_URL=…, PUBLIC_BASE_URL=http://localhost:5173
