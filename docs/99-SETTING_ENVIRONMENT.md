@@ -189,4 +189,194 @@ All of these commands are run **inside the `/client` directory**.
     @import 'tailwindcss';
     ```
 
+
+ ## 3.Iteration Additions (New Requirements Added After Original Setup)
+
+These steps cover all new tools, files, and configs introduced during the project iteration.
+
+## 3.1. Install New Backend Dependencies (SERVER)
+
+# Inside /server
+
+ ```bash
+npm install multer @supabase/supabase-js
+npm install -D @types/multer
+```
+
+## 3.2. Add New Environment Variables (SERVER)
+
+Create or update /server/.env:
+
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+SUPABASE_AVATAR_BUCKET=avatars
+
+## 3.3. Create Supabase Client File (SERVER)
+
+Create /server/src/supabaseClient.ts:
+
+```javascript
+import "dotenv/config";
+import { createClient } from "@supabase/supabase-js";
+
+export const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+```
+## 3.4. Add Multer Upload Middleware (SERVER)
+
+Create /server/src/middleware/upload.middleware.ts:
+
+  ```javascript
+import multer from "multer";
+
+export const uploadAvatar = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 },
+  fileFilter(req, file, cb) {
+    if (!file.mimetype.startsWith("image/")) return cb(new Error("Images only"));
+    cb(null, true);
+  },
+});
+```
+## 3.5. Add Avatar Upload Route (SERVER)
+
+Update your routes file:
+
+  ```javascript
+apiRouter.post(
+  "/users/upload",
+  authMiddleware.verifyToken,
+  uploadAvatar.single("avatar"),
+  userController.uploadAvatar
+);
+```
+## 3.6. Add New DB Fields (SERVER)
+
+In your database schema:
+
+`ALTER TABLE users ADD COLUMN profile_image_url TEXT;`
+`ALTER TABLE users ADD COLUMN theme_preference JSONB;`
+
+## 3.7. Update GET /users/:username to Return Avatar + Theme (SERVER)
+
+Your controller should now include:
+`profile_image_url: user.profile_image_url,`
+`theme_preference: user.theme_preference,`
+
+## 4. Frontend Additions (CLIENT)
+
+## 4.1. Tailwind Theme Variable Support (CLIENT)
+
+Update /client/tailwind.config.js:
+
+```javascript
+extend: {
+  colors: {
+    bg: "var(--bg)",
+    text: "var(--text)",
+    accent: "var(--accent)",
+  },
+},
+darkMode: "class",
+```
+
+## 4.2. Add Base CSS Variables (CLIENT)
+
+Edit /client/src/index.css:
+
+```javascript
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --text: #111827;
+  --accent: #2563eb;
+}
+```
+
+## 4.3. Add Theme Engine (CLIENT)
+
+Create `/client/src/app/theme.ts`:
+
+```javascript
+export const THEME_STYLES = {
+  light: { "--bg": "#fdfdfd", "--text": "#1a1a1a", "--accent": "#3b82f6" },
+  dark: { "--bg": "#0c0f1a", "--text": "#e2e8f0", "--accent": "#7dd3fc" },
+  calm: { "--bg": "#f8fbff", "--text": "#334155", "--accent": "#6ee7b7" },
+  system: { "--bg": "#ffffff", "--text": "#111827", "--accent": "#2563eb" },
+};
+```
+
+And:
+
+```javascript
+export function applyTheme(theme) {
+  const vars = THEME_STYLES[theme];
+  Object.entries(vars).forEach(([k, v]) =>
+    document.documentElement.style.setProperty(k, v)
+  );
+}
+```
+
+## 4.4. Update Redux Auth Slice (CLIENT)
+In `/client/src/features/auth/authSlice.ts:`
+
+Add:
+`profile_image_url?: string`
+
+
+Add reducers:
+
+```javascript 
+setThemePreference(...)
+setProfileImageUrl(...)
+```
+
+## 4.5. Add Theme Selector Component (CLIENT)
+
+Add `/client/src/components/changeTheme.tsx`:
+
+```javascript
+<select value={theme} onChange={handleThemeChange}>
+  <option value="light">Light</option>
+  <option value="dark">Dark</option>
+  <option value="calm">Calm</option>
+  <option value="system">System</option>
+</select>
+```
+
+## 4.6. Apply Theme on App Load (CLIENT)
+
+In `App.tsx`:
+
+```javascript
+useEffect(() => {
+  applyTheme(themePref);
+}, [user]);
+```
+
+## 4.7. Install Avatar Upload UI (CLIENT)
+
+Create component:
+
+```javascript
+<input type="file" accept="image/*" onChange={handleFileChange} />
+
+## 4.8. Add Upload Method in apiService (CLIENT)
+
+uploadAvatar(file) {
+  const form = new FormData();
+  form.append("avatar", file);
+  return api.post("/users/upload", form);
+}
+```
+
+## 4.9. Display Avatar (CLIENT)
+
+In Dashboard/PublicProfile:
+
+<img src={user.profile_image_url} className="w-24 h-24 rounded-full" />
+
 Your full-stack TypeScript environment is now configured.

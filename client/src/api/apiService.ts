@@ -1,10 +1,13 @@
 // Set the base URL for all API requests using the environment variable
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
 // Define user type
 interface User {
   id: number;
   username: string;
+  theme_preference?: {
+    theme: "light" | "dark" | "calm";
+  };
 }
 
 // Define authentication response type
@@ -31,8 +34,8 @@ async function request<T>(endpoint: string, options: RequestInit): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const res = await fetch(url, options);
 
-  const contentType = res.headers.get('content-type') || '';
-  const isJson = contentType.includes('application/json');
+  const contentType = res.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
 
   if (!res.ok) {
     const message = isJson ? (await res.json())?.err : await res.text();
@@ -48,18 +51,18 @@ const register = (
   username: string,
   password: string
 ): Promise<AuthResponse> => {
-  return request('/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  return request("/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
 };
 
 // Log in an existing user
 const login = (username: string, password: string): Promise<AuthResponse> => {
-  return request('/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  return request("/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
 };
@@ -68,12 +71,12 @@ const login = (username: string, password: string): Promise<AuthResponse> => {
 const getUserByUsername = (
   username: string
 ): Promise<PublicProfileResponse> => {
-  return request(`/users/${encodeURIComponent(username)}`, { method: 'GET' });
+  return request(`/users/${encodeURIComponent(username)}`, { method: "GET" });
 };
 
 // Helper to attach Authorization header using saved token
 function getAuthHeaders(): HeadersInit {
-  const storedAuth = localStorage.getItem('auth');
+  const storedAuth = localStorage.getItem("auth");
   let token: string | null = null;
 
   try {
@@ -89,8 +92,8 @@ function getAuthHeaders(): HeadersInit {
 
 // Fetch all saved links for the logged-in user
 const getLinks = (): Promise<Link[]> => {
-  return request('/links', {
-    method: 'GET',
+  return request("/links", {
+    method: "GET",
     headers: getAuthHeaders(),
   });
 };
@@ -98,27 +101,39 @@ const getLinks = (): Promise<Link[]> => {
 // Create a new link
 const createLink = (title: string, url: string): Promise<Link> => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...getAuthHeaders(),
   };
-  return request('/links', {
-    method: 'POST',
+  return request("/links", {
+    method: "POST",
     headers,
     body: JSON.stringify({ title, url }),
   });
 };
 
+const uploadProfilePicture = async (
+  file: File
+): Promise<{ profileImageUrl: string }> => {
+  const formData = new FormData();
+  formData.append("avatar", file);
+
+  return request("/users/upload", {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: formData,
+  });
+};
 // Update an existing link
 const updateLink = (
   id: number,
   updates: Partial<{ title: string; url: string }>
 ): Promise<Link> => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...getAuthHeaders(),
   };
   return request(`/links/${id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
     body: JSON.stringify(updates),
   });
@@ -127,11 +142,32 @@ const updateLink = (
 // Delete a link by ID
 const deleteLink = (id: number): Promise<void> => {
   return request(`/links/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: getAuthHeaders(),
   });
 };
 
+async function updateTheme(themeName: string) {
+  const token = JSON.parse(localStorage.getItem("auth") || "{}")?.token;
+
+  const res = await fetch("http://localhost:8080/api/users/theme", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ theme: themeName }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Failed: ${res.status} - ${errText}`);
+  }
+
+  const data = await res.json();
+  console.log("✅ Theme updated:", data);
+  return data;
+}
 // Export all API functions
 const apiService = {
   register,
@@ -141,6 +177,8 @@ const apiService = {
   createLink,
   updateLink,
   deleteLink,
+  updateTheme,
+  uploadProfilePicture,
 };
 
 export default apiService;
