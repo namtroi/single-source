@@ -10,4 +10,3 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
 }
 
 export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);

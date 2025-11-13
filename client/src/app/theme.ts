@@ -1,6 +1,5 @@
 import type { ThemeValue } from "../features/auth/authSlice";
 
-// map each theme -> CSS variables
 export const THEME_STYLES: Record<
   ThemeValue,
   { "--bg": string; "--text": string; "--accent": string }
@@ -11,35 +10,28 @@ export const THEME_STYLES: Record<
     "--accent": "#2563eb",
   },
   light: {
-    "--bg": "#ffffff",
-    "--text": "#111827",
-    "--accent": "#2563eb",
+    "--bg": "#fdfdfd",
+    "--text": "#1a1a1a",
+    "--accent": "#3b82f6",
   },
   dark: {
-    "--bg": "#020617",
-    "--text": "#e5e7eb",
-    "--accent": "#4f46e5",
+    "--bg": "#0c0f1a",
+    "--text": "#e2e8f0",
+    "--accent": "#7dd3fc",
   },
   calm: {
-    "--bg": "#f5fbff",
-    "--text": "#0f172a",
-    "--accent": "#22c55e",
+    "--bg": "#f8fbff",
+    "--text": "#334155",
+    "--accent": "#6ee7b7",
   },
 };
 
-// apply theme at runtime
 export function applyTheme(theme: ThemeValue) {
   const vars = THEME_STYLES[theme];
-  console.log("Applying theme:", theme, vars); // for debugging
-
   if (!vars) return;
 
-  // if you're also using Tailwind's "dark" class, handle it here:
-  if (theme === "dark") {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
+  // remove dark class (you were never using Tailwind dark mode)
+  document.documentElement.classList.remove("dark");
 
   Object.entries(vars).forEach(([key, value]) => {
     document.documentElement.style.setProperty(key, value);

@@ -170,7 +170,7 @@ export default function PublicProfile() {
 
         <label
           htmlFor="fileInput"
-          className={`bg-blue-100 dark:bg-blue-900 calm:bg-calm-primary
+          className={`bg-blue-600 dark:bg-blue-500 light:bg calm:bg-calm-primary
             p-2 rounded cursor-pointer 
             hover:bg-blue-200 dark:hover:bg-blue-800 calm:hover:bg-calm-primary-hover
             transition-colors
@@ -208,7 +208,7 @@ export default function PublicProfile() {
                 rel="noopener noreferrer"
                 className="block border border-gray-300 dark:border-gray-700 calm:border-calm-border
                   rounded p-3 
-                  bg-white dark:bg-gray-800 calm:bg-calm-surface
+                  bg-white calm:bg-calm-surface  dark:bg-blue-600
                   hover:opacity-90
                   transition-colors">
                 <div className="font-medium text-gray-900 dark:text-gray-100 calm:text-calm-text">

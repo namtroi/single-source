@@ -6,10 +6,11 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+  "test": "vitest",
+  "test:ui": "vitest --ui"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/namtroi/single-source.git"
@@ -22,11 +23,16 @@
   },
   "homepage": "https://github.com/namtroi/single-source#readme",
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
+    "@vitejs/plugin-react": "^5.1.1",
     "concurrently": "^9.2.1",
+    "jsdom": "^27.2.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.8"
   },
   "dependencies": {
     "cors": "^2.8.5",
