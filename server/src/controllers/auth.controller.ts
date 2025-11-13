@@ -1,18 +1,19 @@
-import type { RequestHandler } from 'express';
-import db from '../db';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import type { RequestHandler } from "express";
+import db from "../db";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 interface AuthController {
   registerUser: RequestHandler;
   loginUser: RequestHandler;
+  changeTheme: RequestHandler;
 }
 
 const authController = {} as AuthController;
 
 authController.registerUser = async (req, res, next) => {
   try {
-    console.log('authController.registerUser');
+    console.log("authController.registerUser");
 
     const { username } = req.body;
     const { password_hash } = res.locals;
@@ -31,7 +32,7 @@ authController.registerUser = async (req, res, next) => {
 
     const payload = { id: createdUser.id };
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
-      expiresIn: '1d',
+      expiresIn: "1d",
     });
 
     return res.status(201).json({
@@ -45,7 +46,7 @@ authController.registerUser = async (req, res, next) => {
     return next({
       log: `authController.registerUser - ${error}`,
       status: 500,
-      message: { err: 'Failed to register user' },
+      message: { err: "Failed to register user" },
     });
   }
 };
@@ -59,15 +60,15 @@ authController.loginUser = async (req, res, next) => {
 
     if (!ok) {
       return next({
-        log: 'authMiddleware.checkUserExists: Invalid credentials',
+        log: "authMiddleware.checkUserExists: Invalid credentials",
         status: 401,
-        message: { err: 'Invalid credentials' },
+        message: { err: "Invalid credentials" },
       });
     }
 
     const payload = { id: user.id };
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
-      expiresIn: '1d',
+      expiresIn: "1d",
     });
 
     return res.status(200).json({
@@ -81,7 +82,7 @@ authController.loginUser = async (req, res, next) => {
     return next({
       log: `authController.loginUser - Error: ${error}`,
       status: 500,
-      message: { err: 'Failed to login' },
+      message: { err: "Failed to login" },
     });
   }
 };

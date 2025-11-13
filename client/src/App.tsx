@@ -1,44 +1,63 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from './app/store';
-import Header from './components/Header';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import PublicProfile from './pages/PublicProfile';
-import ProtectedRoute from './components/ProtectedRoute';
+import { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "./app/store";
+import Header from "./components/Header";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import PublicProfile from "./pages/PublicProfile";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { applyTheme, type ThemeValue } from "./app/theme";
 
-// This component defines all routes and main layout of the app
+
 export default function App() {
-  const { isAuthenticated } = useSelector((s: RootState) => s.auth);
+  const { isAuthenticated, user } = useSelector((s: RootState) => s.auth);
 
-  // Render app layout and route configuration
+  useEffect(() => {
+    const storedAuth = localStorage.getItem("auth");
+    const storedUser = storedAuth ? JSON.parse(storedAuth)?.user : null;
+
+    const themePref: ThemeValue =
+      (user?.theme_preference?.theme as ThemeValue) ||
+      (storedUser?.theme_preference?.theme as ThemeValue) ||
+      "light";
+
+    applyTheme(themePref); // sets CSS vars + dark class
+  }, [user]);
+
   return (
-    <div className="max-w-[750px] mx-auto">
-      <Header />
-      <main className="p-6">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+    <div className="min-h-screen bg-bg text-text">
+      <div className="max-w-[750px] mx-auto transition-colors duration-300">
+        <Header />
+        <main className="p-6">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/dashboard" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="/:username" element={<PublicProfile />} />
-        </Routes>
-      </main>
+            <Route path="/:username" element={<PublicProfile />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 }
